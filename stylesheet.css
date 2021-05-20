@@ -1,0 +1,25 @@
+*
+{
+    font-family: monospace;
+}
+body
+{
+    background-color: #2d2e30;
+}
+.textbox
+{
+  color: black;
+  border-radius: 4px;
+  border: none;
+  font-size: 16px;
+}
+.button
+{
+    border-radius: 4px;
+    font-size: 16px;
+}
+#pathfield
+{
+    width: 85%;
+    padding: 2px
+}
