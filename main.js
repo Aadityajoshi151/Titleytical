@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, shell, ipcMain, dialog} = require('electron')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -6,7 +6,15 @@ let win
 
 function createWindow () {
   // Create the browser window.
-  win = new BrowserWindow({ width: 1000, height: 800 })
+  win = new BrowserWindow({
+    width: 1000,
+    height: 800,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+      enableRemoteModule: true,
+    },
+  });
   win.setMenu(null)
   // and load the index.html of the app.
   win.loadFile('index.html')
@@ -43,6 +51,11 @@ app.on('activate', () => {
   if (win === null) {
     createWindow()
   }
+})
+ipcMain.on('browse', function() {
+  dialog.showOpenDialog(win, {properties: ['openDirectory']}).then((result)=>{
+    win.webContents.send('browseresult' ,result);
+  })
 })
 
 // In this file you can include the rest of your app's specific main process
